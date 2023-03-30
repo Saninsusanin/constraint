@@ -11,7 +11,7 @@ class ForbiddenNgramsConstraint(Constraint):
         tokenizer = partial(tokenizer, add_special_tokens=False)
         self.tokens_per_word = [tokenizer(word).input_ids for word in phrase.split()]
 
-        self.seqlen = 7
+        self.seqlen = 1
         self.completed = False
 
         self.curr_token_pos = 0
@@ -42,6 +42,9 @@ class ForbiddenNgramsConstraint(Constraint):
                 if self.curr_token_pos == len(curr_word_of_interest):
                     self.curr_token_pos = 0
                     self.number_of_completed_words += 1
+            else:
+                self.number_of_completed_words = 0
+                self.curr_token_pos = 0
 
         stepped = True
         completed = False
